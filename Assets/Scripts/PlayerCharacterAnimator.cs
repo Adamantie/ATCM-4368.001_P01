@@ -12,6 +12,8 @@ public class PlayerCharacterAnimator : MonoBehaviour
     const string RunState = "Run";
     const string JumpState = "Jumping";
     const string FallState = "Falling";
+    const string LandState = "Landing";
+    const string SprintState = "Sprint";
 
     Animator _animator = null;
 
@@ -30,15 +32,43 @@ public class PlayerCharacterAnimator : MonoBehaviour
         _animator.CrossFadeInFixedTime(RunState, .2f);
     }
 
+    private void OnJumping()
+    {
+        _animator.CrossFadeInFixedTime(JumpState, .2f);
+    }
+
+    private void OnFalling()
+    {
+        _animator.CrossFadeInFixedTime(FallState, .2f);
+    }
+
+    private void OnLanding()
+    {
+        _animator.CrossFadeInFixedTime(LandState, .2f);
+    }
+
+    private void OnSprinting()
+    {
+        _animator.CrossFadeInFixedTime(SprintState, .2f);
+    }
+
     private void OnEnable()
     {
         _thirdPersonMovement.Idle += OnIdle;
         _thirdPersonMovement.StartRunning += OnStartRunning;
+        _thirdPersonMovement.Jumping += OnJumping;
+        _thirdPersonMovement.Falling += OnFalling;
+        _thirdPersonMovement.Landing += OnLanding;
+        _thirdPersonMovement.StartSprinting += OnSprinting;
     }
 
     private void OnDisable()
     {
         _thirdPersonMovement.Idle -= OnIdle;
         _thirdPersonMovement.StartRunning -= OnStartRunning;
+        _thirdPersonMovement.Jumping -= OnJumping;
+        _thirdPersonMovement.Falling -= OnFalling;
+        _thirdPersonMovement.Landing -= OnLanding;
+        _thirdPersonMovement.StartSprinting -= OnSprinting;
     }
 }
